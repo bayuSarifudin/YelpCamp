@@ -1,0 +1,68 @@
+<% layout('/layouts/boilerplate') %> 
+<link rel="stylesheet" href="/stylesheets/imageUpload.css" class="rel">
+
+
+
+    <div class="row">
+        <h1 class="text-center">Edit This Site</h1>
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form action="/campground/<%= campground._id %>?_method=PUT" method="POST" novalidate class="needs-validations" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input class="form-control" type="text" id="title" name="campground[title]" value="<%= campground.title %>" required>
+                            <div class="valid-feedback">
+                                looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="location">Location</label>
+                            <input class="form-control" type="text" name="campground[location]" id="location" value="<%= campground.location %>" required>
+                            <div class="valid-feedback">
+                                looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="price">Campground price</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                <input type="text" id="price" placeholder="0" class="form-control" aria-label="price" name="campground[price]" value="<%= campground.price %>" required>
+                                <span class="input-group-text">.00</span>
+                                <div class="valid-feedback">
+                                    looks good!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Description</label>
+                            <textarea class="form-control" type="text" name="campground[description]" id="description" required><%= campground.description %> </textarea>
+                            <div class="valid-feedback">
+                                looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Add More Images</label>
+                            <div class="form-file custom-file">
+                                <input class="form-control custom-file-input" type="file" id="image" name="campground[image]" multiple onchange="previewMultiple(event)">
+                                <label for="image" class="form-label custom-file-label"></label>
+                            </div>
+                            <div id="formFile">
+                                <% campground.images.forEach(function(img, i) { %> 
+                                    <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
+                                    <div class="form-check-inline">
+                                        <input type="checkbox" name="deleteImages[]" value="<%= img.filename %>" id="image-<%= i %>">
+                                        <label for="image-<%= i %>">Delete?</label>
+                                    </div>
+                                <% }) %> 
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary">Save Site</button>
+                        </div>
+                    </form>
+                    <a href="/campground/<%= campground._id %>" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
